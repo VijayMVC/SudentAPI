@@ -14,7 +14,9 @@ namespace Student.DataAccess.Maps.Courses
         {
             Table("CourseInstance");
             Schema("dbo");
-            Id(x => x.Id, "CourseInstanceId").GeneratedBy.Native();
+            CompositeId()
+                .KeyProperty(x => x.Course, "CourseId")
+                .KeyProperty(x => x.Semester, "SemesterId");
 
             Map(x => x.MaxStudentCount, "MaxStudentCount");
             Map(x => x.DateCreated);
@@ -27,12 +29,12 @@ namespace Student.DataAccess.Maps.Courses
             References(x => x.Semester, "SemesterId")
                 .Cascade.None();
 
-            HasManyToMany(x => x.Students)
-                .Table("StudentCourse")
-                .ParentKeyColumn("StudentId")
-                .ChildKeyColumn("CourseInstanceId")
-                .Inverse()
-                .Cascade.None();
+            //HasManyToMany(x => x.Students)
+            //    .Table("StudentCourse")
+            //    .ParentKeyColumn("StudentId")
+            //    .ChildKeyColumn("CourseInstanceId")
+            //    .Inverse()
+            //    .Cascade.None();
         }
     }
 }

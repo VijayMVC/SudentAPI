@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace Student.Domain.Domain
 {
-    public class EntityBase
+    public class EntityBase : AuditEntity
     {
         public virtual Int32 Id { get; set; }
-
-        public virtual String UserCreated { get; set; }
-        public virtual String UserModified { get; set; }
-        public virtual DateTime DateCreated { get; set; }
-        public virtual DateTime DateModified { get; set; }
     }
 }
