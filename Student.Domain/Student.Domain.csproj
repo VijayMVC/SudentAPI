@@ -39,9 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\AuditEntity.cs" />
     <Compile Include="Domain\Courses\Course.cs" />
     <Compile Include="Domain\Courses\CourseInstance.cs" />
-    <Compile Include="Domain\AuditEntity.cs" />
     <Compile Include="Domain\EntityBase.cs" />
     <Compile Include="Domain\Lookups\Department.cs" />
     <Compile Include="Domain\Lookups\LookupBase.cs" />
