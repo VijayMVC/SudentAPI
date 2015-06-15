@@ -11,8 +11,7 @@ namespace Student.Domain.Domain.Sudents
     public class StudentCourse : EntityBase
     {
         public virtual Student Student { get; set; }
-        public virtual Course Course { get; set; }
+        public virtual CourseInstance CourseInstance { get; set; }
         public virtual Double Grade { get; set; }
-        public virtual Semester Semester { get; set; }
     }
 }

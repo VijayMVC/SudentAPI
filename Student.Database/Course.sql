@@ -2,7 +2,6 @@
 (
 	[CourseId] INT NOT NULL PRIMARY KEY IDENTITY, 
     [DepartmentId] INT NOT NULL, 
-	[MaxStudentCount] INT NOT NULL,
 	[Name] NVARCHAR(200) NOT NULL,
 	[DateCreated] DATETIME NOT NULL,
 	[UserCreated] NVARCHAR(150) NOT NULL,

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Student.Domain.Domain.Lookups;
 
 namespace Student.Domain.Domain.Sudents
@@ -8,5 +9,7 @@ namespace Student.Domain.Domain.Sudents
         public virtual String FirstName { get; set; }
         public virtual String LastName { get; set; }
         public virtual Major Major { get; set; }
+
+        public virtual List<StudentCourse> StudentCourses { get; set; } 
     }
 }

@@ -2,8 +2,7 @@
 (
 	[StudentCourseId] INT NOT NULL PRIMARY KEY IDENTITY,
 	[StudentId] INT NOT NULL,
-	[CourseId] INT NOT NULL,
-	[SemesterId] INT NOT NULL, 
+	[CourseInstanceId] INT NOT NULL,
     [Grade] DECIMAL(3, 2) NOT NULL,
 	[DateCreated] DATETIME NOT NULL,
 	[UserCreated] NVARCHAR(150) NOT NULL,
@@ -11,8 +10,7 @@
 	[UserModified] NVARCHAR(150) NOT NULL
 
     CONSTRAINT [FK_StudentCourse_To_Student] FOREIGN KEY ([StudentId]) REFERENCES [dbo].[Student]([StudentId])
-    CONSTRAINT [FK_StudentCourse_To_Course] FOREIGN KEY ([CourseId]) REFERENCES [dbo].[Course]([CourseId])
-    CONSTRAINT [FK_StudentCourse_To_Semester] FOREIGN KEY ([SemesterId]) REFERENCES [dbo].[Semester]([SemesterId])
+    CONSTRAINT [FK_StudentCourse_To_CourseInstance] FOREIGN KEY ([CourseInstanceId]) REFERENCES [dbo].[CourseInstance]([CourseInstanceId])
 )
 GO
 

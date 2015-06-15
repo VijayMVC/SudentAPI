@@ -10,7 +10,6 @@ namespace Student.Domain.Domain.Courses
     public class Course : EntityBase
     {
         public virtual Department Department { get; set; }
-        public virtual Int32 MaxStudentCount { get; set; }
         public virtual String Name { get; set; }
     }
 }
