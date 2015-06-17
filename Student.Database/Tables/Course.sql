@@ -1,14 +1,15 @@
 ﻿CREATE TABLE [dbo].[Course]
 (
 	[CourseId] INT NOT NULL PRIMARY KEY IDENTITY, 
-    [DepartmentId] INT NOT NULL, 
-	[Name] NVARCHAR(200) NOT NULL,
+    [MajorId] INT NOT NULL, 
+	[CourseCode] NVARCHAR(10) NOT NULL,
+	[CourseDesc] NVARCHAR(200) NOT NULL,
 	[DateCreated] DATETIME NOT NULL,
 	[UserCreated] NVARCHAR(150) NOT NULL,
 	[DateModified] DATETIME NOT NULL,
 	[UserModified] NVARCHAR(150) NOT NULL
 
-    CONSTRAINT [FK_Course_To_Department] FOREIGN KEY ([DepartmentId]) REFERENCES [dbo].[Department]([DepartmentId])
+    CONSTRAINT [FK_Course_To_Major] FOREIGN KEY ([MajorId]) REFERENCES [dbo].[Major]([MajorId])
 )
 GO
 

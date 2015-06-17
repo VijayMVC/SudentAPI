@@ -16,13 +16,14 @@ namespace Student.DataAccess.Maps.Courses
             Schema("dbo");
             Id(x => x.Id, "CourseId").GeneratedBy.Native();
 
-            Map(x => x.Name, "Name");
+            Map(x => x.CourseCode, "CourseCode");
+            Map(x => x.CourseDesc, "CourseDesc");
             Map(x => x.DateCreated);
             Map(x => x.DateModified);
             Map(x => x.UserCreated);
             Map(x => x.UserModified);
 
-            References(x => x.Department, "DepartmentId")
+            References(x => x.Major, "MajorId")
                 .Cascade.None();
         }
     }

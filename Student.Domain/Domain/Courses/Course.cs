@@ -9,7 +9,8 @@ namespace Student.Domain.Domain.Courses
 {
     public class Course : EntityBase
     {
-        public virtual Department Department { get; set; }
-        public virtual String Name { get; set; }
+        public virtual Major Major { get; set; }
+        public virtual String CourseCode { get; set; }
+        public virtual String CourseDesc { get; set; }
     }
 }
