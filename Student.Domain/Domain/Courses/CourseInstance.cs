@@ -9,6 +9,9 @@ namespace Student.Domain.Domain.Courses
 {
     public class CourseInstance : AuditEntity
     {
+        private Int32 CPK_CourseId { get; set; }
+        private Int32 CPK_SemesterId { get; set; }
+
         public virtual Int32 MaxStudentCount { get; set; }
 
         public virtual Course Course { get; set; }
@@ -22,7 +25,7 @@ namespace Student.Domain.Domain.Courses
             if (castedObject == null)
                 return false;
 
-            if (castedObject.Course == this.Course && castedObject.Semester == this.Semester)
+            if (castedObject.CPK_CourseId == this.CPK_CourseId && castedObject.CPK_SemesterId == this.CPK_SemesterId)
                 return true;
 
             return false;
@@ -30,7 +33,7 @@ namespace Student.Domain.Domain.Courses
 
         public override int GetHashCode()
         {
-            return Course.GetHashCode() ^ Semester.GetHashCode();
+            return CPK_CourseId.GetHashCode() ^ CPK_SemesterId.GetHashCode();
         }
     }
 }

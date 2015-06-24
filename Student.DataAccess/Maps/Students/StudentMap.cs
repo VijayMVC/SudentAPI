@@ -28,10 +28,10 @@ namespace Student.DataAccess.Maps.Students
             References(x => x.Major, "MajorId")
                 .Cascade.None();
 
-            HasMany(x => x.StudentCourses)
-                .KeyColumn("StudentId")
-                //.Inverse()
-                .Cascade.All();
+            //HasMany(x => x.StudentCourses)
+            //    .KeyColumn("StudentId")
+            //    //.Inverse()
+            //    .Cascade.All();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentNHibernate;
 using FluentNHibernate.Mapping;
 using Student.Domain.Domain.Courses;
 
@@ -15,8 +16,8 @@ namespace Student.DataAccess.Maps.Courses
             Table("CourseInstance");
             Schema("dbo");
             CompositeId()
-                .KeyProperty(x => x.Course, "CourseId")
-                .KeyProperty(x => x.Semester, "SemesterId");
+                .KeyProperty(Reveal.Member<CourseInstance>("CPK_CourseId"), "CourseId")
+                .KeyProperty(Reveal.Member<CourseInstance>("CPK_SemesterId"), "SemesterId");
 
             Map(x => x.MaxStudentCount, "MaxStudentCount");
             Map(x => x.DateCreated);

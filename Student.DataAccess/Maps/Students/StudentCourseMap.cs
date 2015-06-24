@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using FluentNHibernate;
 using FluentNHibernate.Mapping;
+using Student.Domain.Domain.Courses;
 using Student.Domain.Domain.Sudents;
 
 namespace Student.DataAccess.Maps.Students
@@ -15,9 +18,9 @@ namespace Student.DataAccess.Maps.Students
             Table("StudentCourse");
             Schema("dbo");
             CompositeId()
-                .KeyProperty(x => x.Student, "StudentId")
-                .KeyProperty(x => x.CourseInstance.Course, "CourseId")
-                .KeyProperty(x => x.CourseInstance.Semester, "SemesterId");
+                .KeyProperty(Reveal.Member<StudentCourse>("CPK_StudentId"), "StudentId")
+                .KeyProperty(Reveal.Member<StudentCourse>("CPK_CourseId"), "CourseId")
+                .KeyProperty(Reveal.Member<StudentCourse>("CPK_SemesterId"), "SemesterId");
 
             Map(x => x.Grade, "Grade");
             Map(x => x.DateCreated);
@@ -27,8 +30,11 @@ namespace Student.DataAccess.Maps.Students
 
             References(x => x.Student, "StudentId")
                 .Cascade.None();
-            References(x => x.CourseInstance, "CourseInstanceId")
-                .Cascade.None();
+
+            //http://w3facility.org/question/fluent-nhibernate-mapping-to-join-by-two-non-primary-key-columns/
+            //References(x => x.CourseInstance)
+            //    .Formula("SELECT CI.CourseId, CI.SemesterId FROM [dbo].[CourseInstance] [CI] WHERE CI.CourseId = CourseId AND CI.SemesterId = SemesterId")
+            //    .Cascade.None();
         }
     }
 }
