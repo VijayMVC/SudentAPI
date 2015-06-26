@@ -6,8 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
-using System.Web.Mvc;
 using System.Web.Http;
+using System.Web.Http.Dispatcher;
 using System.Web.Security;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
@@ -33,12 +33,15 @@ namespace Student.DependencyResolution
 
         private void Register()
         {
+            //GlobalConfiguration.Configuration.DependencyResolver = new WindsorHttpDependencyResolver(IoCContainer);
+            //GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerActivator), new WindsorHttpControllerActivator(IoCContainer));
+
             #region Data Registration
 
             IoCContainer.Register(Component.For<IRepositoryInit>().ImplementedBy<RepositoryInit>()
                 .LifeStyle.Transient);
             IoCContainer.Register(Component.For<IRepositoryProvider>().ImplementedBy<RepositoryProvider>()
-                .LifeStyle.Transient);
+                .OnCreate((a, b) => b.RepositoryKey = ConnectionString).LifeStyle.Transient);
 
             #endregion
 
@@ -65,8 +68,10 @@ namespace Student.DependencyResolution
 
             #region Controller Registration
 
-            IoCContainer.Register(Classes.FromAssembly(Assembly.Load("Student.API")).BasedOn<IController>().Configure(c => c.LifestylePerWebRequest()));
-            IoCContainer.Register(Classes.FromAssembly(Assembly.Load("Student.API")).BasedOn<IHttpController>().LifestyleScoped());
+            //IoCContainer.Register(Classes.FromAssembly(Assembly.Load("Student.API")).BasedOn<IController>().Configure(c => c.LifestylePerWebRequest()));
+            IoCContainer.Register(Classes.FromAssembly(Assembly.Load("Student.API")).BasedOn<IHttpController>().LifestyleTransient());
+
+            
 
             #endregion
         }
