@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentNHibernate.Cfg;
 using NHibernate;
+using NHibernate.Event;
+using Student.DataAccess.Listeners;
 using Configuration = NHibernate.Cfg.Configuration;
 
 namespace Student.DataAccess.Repositories
@@ -56,6 +58,12 @@ namespace Student.DataAccess.Repositories
                         {
                             config.Mappings(m => m.FluentMappings.AddFromAssembly(a));
                         }
+
+                        config.ExposeConfiguration(cfg =>
+                        {
+                            cfg.EventListeners.PreInsertEventListeners = new IPreInsertEventListener[] { new Insert() };
+                            cfg.EventListeners.PreUpdateEventListeners = new IPreUpdateEventListener[] { new Update() };
+                        });
 
                         NhibenrnateConfiguration = config.BuildConfiguration();
                         SessionFactory = config.BuildSessionFactory();

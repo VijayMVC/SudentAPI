@@ -63,6 +63,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Listeners\Insert.cs" />
+    <Compile Include="Listeners\ListenerBase.cs" />
+    <Compile Include="Listeners\Update.cs" />
     <Compile Include="Maps\Courses\CourseInstanceMap.cs" />
     <Compile Include="Maps\Courses\CourseMap.cs" />
     <Compile Include="Maps\Lookups\DepartmentMap.cs" />
