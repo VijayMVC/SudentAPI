@@ -19,17 +19,15 @@ namespace Student.API.Controllers
             RepositoryProvider = repositoryProvider;
         }
 
-
         /*
-        NOTE: Json formatter is walking object tree and loading nhibernate collections
-              Objects should be copied into a DTO for return and seperated from the Domain object and Session connection...
+        NOTE: NHibernateContractResolver in DataAccess is filtering out Lazy Loaded properties from result set.
         */
         [HttpGet]
         public IHttpActionResult Get()
         {
             try
             {
-                var student = RepositoryProvider.List<DomainStudent>().ToList();
+                var student = RepositoryProvider.List<DomainStudent>();
                 return Ok(student);
             }
             catch (Exception ex)

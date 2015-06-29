@@ -4,6 +4,7 @@ using System.Data;
 using System.Reflection;
 using System.Runtime.Remoting.Messaging;
 using System.Web;
+using HibernatingRhinos.Profiler.Appender.NHibernate;
 using NHibernate;
 using NHibernate.Cfg.ConfigurationSchema;
 using Student.Domain.Repositories;
@@ -16,6 +17,10 @@ namespace Student.DataAccess.Repositories
         public void InitDataContext(string connectionString)
         {
             InitDataContext(connectionString, null);
+
+#if DEBUG
+            NHibernateProfiler.Initialize();
+#endif
         }
 
         public void InitDataContext(string connectionString, List<Assembly> dataMappings)

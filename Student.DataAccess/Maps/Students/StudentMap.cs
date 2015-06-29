@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentNHibernate.Mapping;
+using FluentNHibernate.Utils;
 using NHibernate.Mapping.ByCode.Impl;
 
 using DomainStudent = Student.Domain.Domain.Sudents.Student;
