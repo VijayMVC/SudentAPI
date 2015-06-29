@@ -31,10 +31,9 @@ namespace Student.DataAccess.Maps.Students
             References(x => x.Student, "StudentId")
                 .Cascade.None();
 
-            //http://w3facility.org/question/fluent-nhibernate-mapping-to-join-by-two-non-primary-key-columns/
-            //References(x => x.CourseInstance)
-            //    .Formula("SELECT CI.CourseId, CI.SemesterId FROM [dbo].[CourseInstance] [CI] WHERE CI.CourseId = CourseId AND CI.SemesterId = SemesterId")
-            //    .Cascade.None();
+            References(x => x.CourseInstance)
+                .Columns("CourseId", "SemesterId")
+                .Cascade.None();
         }
     }
 }

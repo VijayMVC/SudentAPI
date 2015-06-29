@@ -17,7 +17,7 @@ namespace Student.Domain.Domain.Courses
         public virtual Course Course { get; set; }
         public virtual Semester Semester { get; set; }
 
-        public virtual List<Sudents.Student> Students { get; set; }
+        public virtual IList<Sudents.Student> Students { get; set; }
 
         public override bool Equals(object obj)
         {

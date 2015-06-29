@@ -21,6 +21,7 @@ namespace Student.DataAccess.Repositories
         {
             get
             {
+                
                 if (String.IsNullOrWhiteSpace(RepositoryKey))
                     Debug.WriteLine(RepositoryKey);
 

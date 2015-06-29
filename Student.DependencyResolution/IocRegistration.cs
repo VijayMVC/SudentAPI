@@ -33,9 +33,6 @@ namespace Student.DependencyResolution
 
         private void Register()
         {
-            //GlobalConfiguration.Configuration.DependencyResolver = new WindsorHttpDependencyResolver(IoCContainer);
-            //GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerActivator), new WindsorHttpControllerActivator(IoCContainer));
-
             #region Data Registration
 
             IoCContainer.Register(Component.For<IRepositoryInit>().ImplementedBy<RepositoryInit>()
@@ -67,11 +64,9 @@ namespace Student.DependencyResolution
             #endregion
 
             #region Controller Registration
-
+            
             //IoCContainer.Register(Classes.FromAssembly(Assembly.Load("Student.API")).BasedOn<IController>().Configure(c => c.LifestylePerWebRequest()));
             IoCContainer.Register(Classes.FromAssembly(Assembly.Load("Student.API")).BasedOn<IHttpController>().LifestyleTransient());
-
-            
 
             #endregion
         }

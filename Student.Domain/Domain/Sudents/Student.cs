@@ -10,6 +10,6 @@ namespace Student.Domain.Domain.Sudents
         public virtual String LastName { get; set; }
         public virtual Major Major { get; set; }
 
-        public virtual List<StudentCourse> StudentCourses { get; set; } 
+        public virtual IList<StudentCourse> StudentCourses { get; set; } 
     }
 }

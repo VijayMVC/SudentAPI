@@ -30,12 +30,12 @@ namespace Student.DataAccess.Maps.Courses
             References(x => x.Semester, "SemesterId")
                 .Cascade.None();
 
-            //HasManyToMany(x => x.Students)
-            //    .Table("StudentCourse")
-            //    .ParentKeyColumn("StudentId")
-            //    .ChildKeyColumn("CourseInstanceId")
-            //    .Inverse()
-            //    .Cascade.None();
+            HasManyToMany(x => x.Students)
+                .Table("StudentCourse")
+                .ChildKeyColumn("StudentId")
+                .ParentKeyColumns.Add("CourseId", "SemesterId")
+                .Inverse()
+                .Cascade.None();
         }
     }
 }

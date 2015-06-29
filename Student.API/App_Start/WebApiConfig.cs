@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Newtonsoft.Json.Serialization;
 using Student.DependencyResolution;
 
 namespace Student.API
@@ -15,6 +16,10 @@ namespace Student.API
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+            config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new ApiContractResolver();
 
             config.DependencyResolver = new WindsorHttpDependencyResolver(IocRegistration.IoCContainer);
 
