@@ -74,11 +74,13 @@
     <Compile Include="Maps\Students\StudentCourseMap.cs" />
     <Compile Include="Maps\Students\StudentMap.cs" />
     <Compile Include="NHibernateContractResolver.cs" />
+    <Compile Include="Repositories\Courses\CourseInstanceRepository.cs" />
     <Compile Include="Repositories\NHibernateSessionProvider.cs" />
     <Compile Include="Repositories\RepositoryInit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\RepositoryProvider.cs" />
     <Compile Include="Repositories\SessionProvider.cs" />
+    <Compile Include="Repositories\Students\StudentCourseRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

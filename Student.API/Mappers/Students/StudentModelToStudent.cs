@@ -10,7 +10,7 @@ using DomainStudent = Student.Domain.Domain.Sudents.Student;
 
 namespace Student.API.Mappers.Students
 {
-    public static class StudentModelToStudnet
+    public static class StudentModelToStudent
     {
         public delegate void Transformer(StudentModel input, DomainStudent output, IRepositoryProvider rep);
 
@@ -21,10 +21,11 @@ namespace Student.API.Mappers.Students
             (d, m, r) => m.Major = r.FindSingleByProperty<Major>("ShortDescription", d.Major)
         };
 
-        public static DomainStudent Transform(StudentModel input)
+        public static DomainStudent Transform(StudentModel input, DomainStudent output = null)
         {
             var rep = IocRegistration.IoCContainer.Resolve<IRepositoryProvider>();
-            var output = rep.Get<DomainStudent>(input.Id) ?? new DomainStudent();
+            if(output == null)
+                output = rep.Get<DomainStudent>(input.Id) ?? new DomainStudent();
             Transformers.ForEach(i => i(input, output, rep));
             return output;
         }

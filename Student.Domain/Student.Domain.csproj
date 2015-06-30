@@ -50,8 +50,10 @@
     <Compile Include="Domain\Sudents\Student.cs" />
     <Compile Include="Domain\Sudents\StudentCourse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Courses\ICourseInstanceRepository.cs" />
     <Compile Include="Repositories\IRepositoryProvider.cs" />
     <Compile Include="Repositories\IRepositoryInit.cs" />
+    <Compile Include="Repositories\Students\IStudentCourseRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

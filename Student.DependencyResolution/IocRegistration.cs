@@ -12,7 +12,11 @@ using System.Web.Security;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Student.DataAccess.Repositories;
+using Student.DataAccess.Repositories.Courses;
+using Student.DataAccess.Repositories.Students;
 using Student.Domain.Repositories;
+using Student.Domain.Repositories.Courses;
+using Student.Domain.Repositories.Students;
 
 namespace Student.DependencyResolution
 {
@@ -38,6 +42,10 @@ namespace Student.DependencyResolution
             IoCContainer.Register(Component.For<IRepositoryInit>().ImplementedBy<RepositoryInit>()
                 .LifeStyle.Transient);
             IoCContainer.Register(Component.For<IRepositoryProvider>().ImplementedBy<RepositoryProvider>()
+                .OnCreate((a, b) => b.RepositoryKey = ConnectionString).LifeStyle.Transient);
+            IoCContainer.Register(Component.For<IStudentCourseRepository>().ImplementedBy<StudentCourseRepository>()
+                .OnCreate((a, b) => b.RepositoryKey = ConnectionString).LifeStyle.Transient);
+            IoCContainer.Register(Component.For<ICourseInstanceRepository>().ImplementedBy<CourseInstanceRepository>()
                 .OnCreate((a, b) => b.RepositoryKey = ConnectionString).LifeStyle.Transient);
 
             #endregion

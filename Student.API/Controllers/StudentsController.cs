@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
+using System.Web.Http.OData;
 using Castle.Core.Internal;
 using Newtonsoft.Json;
 using Student.API.Mappers.Students;
@@ -10,6 +12,7 @@ using Student.API.Models;
 using Student.DependencyResolution;
 using Student.Domain.Domain.Courses;
 using Student.Domain.Repositories;
+using Student.API.Helpers;
 using DomainStudent = Student.Domain.Domain.Sudents.Student;
 
 namespace Student.API.Controllers
@@ -27,13 +30,15 @@ namespace Student.API.Controllers
         NOTE: NHibernateContractResolver in DataAccess is filtering out Lazy Loaded properties from result set.
         */
         [HttpGet]
-        public IHttpActionResult Get()
+        [Route("api/Students")]
+        public IHttpActionResult Get(String sort="Id")
         {
             try
             {
                 var student = RepositoryProvider
                                 .List<DomainStudent>()
                                 .Select(StudentToStudentModel.Transform)
+                                .ApplySort(sort)
                                 .ToList();
                 return Ok(student);
             }
@@ -46,6 +51,7 @@ namespace Student.API.Controllers
         }
 
         [HttpGet]
+        [Route("api/Students/{id}")]
         public IHttpActionResult Get(Int32 id)
         {
             try
@@ -67,6 +73,7 @@ namespace Student.API.Controllers
         }
 
         [HttpPost]
+        [Route("api/Students")]
         public IHttpActionResult Post([FromBody] StudentModel model)
         {
             //Insert New
@@ -75,7 +82,7 @@ namespace Student.API.Controllers
                 if (model == null || model.Id != 0)
                     return BadRequest();
 
-                var student = StudentModelToStudnet.Transform(model);
+                var student = StudentModelToStudent.Transform(model);
                 RepositoryProvider.Save(student);
 
                 return Created(Request.RequestUri + "/" + student.Id, student);
@@ -89,15 +96,17 @@ namespace Student.API.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult Put([FromBody] StudentModel model)
+        [Route("api/Students/{id}")]
+        public IHttpActionResult Put(Int32 id, [FromBody] StudentModel model)
         {
             //Update
             try
             {
-                if (model == null || model.Id == 0)
+                if (id == 0 || model == null)
                     return BadRequest();
 
-                var student = StudentModelToStudnet.Transform(model);
+                model.Id = id;
+                var student = StudentModelToStudent.Transform(model);
 
                 if (student.Id == 0)
                 {
@@ -109,6 +118,78 @@ namespace Student.API.Controllers
 
                 model = StudentToStudentModel.Transform(student);
                 return Ok(model);
+            }
+            catch (Exception ex)
+            {
+                //TODO: Log Errors...
+
+                return InternalServerError();
+            }
+        }
+
+        #region Comments
+        /// <remarks>
+        /// Delta does not follow Patch specs.  It receives a partial object with the new values rather than
+        ///     a list of actions to preform to update the document.  I chose to go with Delta because it's a
+        ///     Microsoft library, not a 3rd party.
+        /// </remarks>
+        #endregion
+        [HttpPatch]
+        [Route("api/Students/{id}")]
+        public IHttpActionResult Patch(Int32 id, [FromBody] Delta<StudentModel> delta)
+        {
+            #region Json Payload Example
+            /*
+            {
+                "FirstName":"Bob",
+                "LastName":"Smith"
+            }
+            */
+            #endregion
+            try
+            {
+                if (id == 0)
+                    return BadRequest();
+
+                var student = RepositoryProvider.Get<DomainStudent>(id);
+
+                if (student == null)
+                    return NotFound();
+
+                var model = StudentToStudentModel.Transform(student);
+                delta.Patch(model);
+
+                student = StudentModelToStudent.Transform(model, student);
+
+                RepositoryProvider.Save(student);
+
+                return Ok(model);
+            }
+            catch (Exception ex)
+            {
+                //TODO: Log Errors...
+
+                return InternalServerError();
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/Students/{id}")]
+        public IHttpActionResult Delete(Int32 id)
+        {
+            try
+            {
+                if (id == 0)
+                    return BadRequest();
+
+                var student = RepositoryProvider.Get<DomainStudent>(id);
+
+                if (student == null)
+                    return NotFound();
+
+                RepositoryProvider.Delete(student);
+
+                return StatusCode(HttpStatusCode.NoContent);
             }
             catch (Exception ex)
             {
