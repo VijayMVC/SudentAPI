@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Student.API.Helpers
 {
-    public static class IQueryableExtensions
+    public static class QueryableExtensions
     {
         public static IQueryable<T> ApplySort<T>(this IQueryable<T> source, string sort)
         {

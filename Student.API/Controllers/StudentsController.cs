@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.OData;
+using System.Web.Http.Routing;
 using Castle.Core.Internal;
 using Newtonsoft.Json;
 using Student.API.Mappers.Students;
@@ -17,7 +19,7 @@ using DomainStudent = Student.Domain.Domain.Sudents.Student;
 
 namespace Student.API.Controllers
 {
-    public class StudentsController : ApiController
+    public class StudentsController : BaseApiController
     {
         public IRepositoryProvider RepositoryProvider { get; set; }
 
@@ -30,17 +32,20 @@ namespace Student.API.Controllers
         NOTE: NHibernateContractResolver in DataAccess is filtering out Lazy Loaded properties from result set.
         */
         [HttpGet]
-        [Route("api/Students")]
-        public IHttpActionResult Get(String sort="Id")
+        [Route("api/Students", Name = "StudentsList")]
+        public IHttpActionResult Get(String sort = "Id", String fields = null, Int32 page = 1, Int32 pageSize = 10)
         {
             try
             {
-                var student = RepositoryProvider
+                var students = RepositoryProvider
                                 .List<DomainStudent>()
                                 .Select(StudentToStudentModel.Transform)
-                                .ApplySort(sort)
                                 .ToList();
-                return Ok(student);
+
+                var results = HandlePaging(students, sort, fields, page, pageSize, MaxPageSize)
+                    .ApplyFieldFiltering(fields);
+
+                return Ok(results);
             }
             catch (Exception ex)
             {
@@ -52,7 +57,7 @@ namespace Student.API.Controllers
 
         [HttpGet]
         [Route("api/Students/{id}")]
-        public IHttpActionResult Get(Int32 id)
+        public IHttpActionResult Get(Int32 id, String fields = null)
         {
             try
             {
@@ -60,7 +65,8 @@ namespace Student.API.Controllers
                     return NotFound();
 
                 var student = RepositoryProvider.Get<DomainStudent>(id);
-                var model = StudentToStudentModel.Transform(student);
+                var model = StudentToStudentModel.Transform(student)
+                    .ApplyFieldFiltering(fields);
 
                 return Ok(model);
             }
