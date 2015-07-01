@@ -23,20 +23,11 @@ namespace Student.API.Helpers
             if (String.IsNullOrWhiteSpace(fields))
                 return source;
 
-            var fieldList = fields.ToLower().Split(',').ToList();
             var results = new List<Object>();
-
             foreach (var record in source)
             {
-                var expandoObject = new ExpandoObject();
-                foreach (var field in fieldList)
-                {
-                    var fieldValue = typeof(T)
-                        .GetProperty(field, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance)
-                        .GetValue(record, null);
-                    ((IDictionary<String, Object>)expandoObject).Add(field, fieldValue);
-                }
-                results.Add(expandoObject);
+                var obj = record.ApplyFieldFiltering(fields);
+                results.Add(obj);
             }
 
             return results;

@@ -81,6 +81,7 @@
     <Compile Include="Repositories\RepositoryProvider.cs" />
     <Compile Include="Repositories\SessionProvider.cs" />
     <Compile Include="Repositories\Students\StudentCourseRepository.cs" />
+    <Compile Include="Repositories\Students\StudentRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

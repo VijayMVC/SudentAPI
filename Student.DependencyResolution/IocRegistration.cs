@@ -43,6 +43,8 @@ namespace Student.DependencyResolution
                 .LifeStyle.Transient);
             IoCContainer.Register(Component.For<IRepositoryProvider>().ImplementedBy<RepositoryProvider>()
                 .OnCreate((a, b) => b.RepositoryKey = ConnectionString).LifeStyle.Transient);
+            IoCContainer.Register(Component.For<IStudentRepository>().ImplementedBy<StudentRepository>()
+                .OnCreate((a, b) => b.RepositoryKey = ConnectionString).LifeStyle.Transient);
             IoCContainer.Register(Component.For<IStudentCourseRepository>().ImplementedBy<StudentCourseRepository>()
                 .OnCreate((a, b) => b.RepositoryKey = ConnectionString).LifeStyle.Transient);
             IoCContainer.Register(Component.For<ICourseInstanceRepository>().ImplementedBy<CourseInstanceRepository>()

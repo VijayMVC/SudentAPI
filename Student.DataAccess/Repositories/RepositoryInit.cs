@@ -17,10 +17,6 @@ namespace Student.DataAccess.Repositories
         public void InitDataContext(string connectionString)
         {
             InitDataContext(connectionString, null);
-
-#if DEBUG
-            NHibernateProfiler.Initialize();
-#endif
         }
 
         public void InitDataContext(string connectionString, List<Assembly> dataMappings)
@@ -31,6 +27,10 @@ namespace Student.DataAccess.Repositories
             var config = new SessionProvider(dataMappings);
             config.Initialize(connectionString);
             NHibernateSessionProvider.AddSessionFactoryConfiguration(RepositoryKey, config);
+
+#if DEBUG
+            NHibernateProfiler.Initialize();
+#endif
         }
 
         public void BeginRequest(IsolationLevel isolation = IsolationLevel.ReadCommitted)

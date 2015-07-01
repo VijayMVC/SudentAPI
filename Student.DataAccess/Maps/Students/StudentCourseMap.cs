@@ -29,10 +29,14 @@ namespace Student.DataAccess.Maps.Students
             Map(x => x.UserModified);
 
             References(x => x.Student, "StudentId")
+                .Not.Insert()
+                .Not.Update()
                 .Cascade.None();
 
             References(x => x.CourseInstance)
                 .Columns("CourseId", "SemesterId")
+                .Not.Insert()
+                .Not.Update()
                 .Cascade.None();
         }
     }

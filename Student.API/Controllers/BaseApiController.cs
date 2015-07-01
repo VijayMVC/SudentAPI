@@ -57,7 +57,6 @@ namespace Student.API.Controllers
             HttpContext.Current.Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationHeader));
 
             var results = enumerable
-                .ApplySort(sort)
                 .Skip(pageSize * (page - 1))
                 .Take(pageSize)
                 .ToList();

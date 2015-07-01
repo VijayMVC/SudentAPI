@@ -25,7 +25,7 @@ namespace Student.API.Controllers
 
         [HttpGet]
         [Route("api/Students/{studentId}/Courses")]
-        public IHttpActionResult Get(Int32 studentId, String sort="Semester", Int32 page = 1, Int32 pageSize = 10)
+        public IHttpActionResult Get(Int32 studentId, String sort="Semester", String fields = null, Int32 page = 1, Int32 pageSize = 10)
         {
             try
             {
@@ -35,9 +35,11 @@ namespace Student.API.Controllers
 
                 var model = StudentCourseRepository.GetByStudentId(studentId)
                     .Select(StudentCourseToStudentCourseModel.Transform)
+                    .ApplySort(sort)
                     .ToList();
 
-                var results = HandlePaging(model, sort, null, page, pageSize, MaxPageSize);
+                var results = HandlePaging(model, sort, null, page, pageSize, MaxPageSize)
+                    .ApplyFieldFiltering(fields);
 
                 return Ok(results);
             }

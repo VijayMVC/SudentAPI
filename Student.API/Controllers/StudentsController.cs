@@ -15,6 +15,7 @@ using Student.DependencyResolution;
 using Student.Domain.Domain.Courses;
 using Student.Domain.Repositories;
 using Student.API.Helpers;
+using Student.Domain.Repositories.Students;
 using DomainStudent = Student.Domain.Domain.Sudents.Student;
 
 namespace Student.API.Controllers
@@ -22,10 +23,12 @@ namespace Student.API.Controllers
     public class StudentsController : BaseApiController
     {
         public IRepositoryProvider RepositoryProvider { get; set; }
+        public IStudentRepository StudentRepository { get; set; }
 
-        public StudentsController(IRepositoryProvider repositoryProvider)
+        public StudentsController(IRepositoryProvider repositoryProvider, IStudentRepository studentRepository)
         {
             RepositoryProvider = repositoryProvider;
+            StudentRepository = studentRepository;
         }
 
         /*
@@ -37,9 +40,9 @@ namespace Student.API.Controllers
         {
             try
             {
-                var students = RepositoryProvider
-                                .List<DomainStudent>()
+                var students = StudentRepository.GetWithCourses()
                                 .Select(StudentToStudentModel.Transform)
+                                .ApplySort(sort)
                                 .ToList();
 
                 var results = HandlePaging(students, sort, fields, page, pageSize, MaxPageSize)
@@ -64,7 +67,7 @@ namespace Student.API.Controllers
                 if (id == default(Int32))
                     return NotFound();
 
-                var student = RepositoryProvider.Get<DomainStudent>(id);
+                var student = StudentRepository.GetWithCourses(id);
                 var model = StudentToStudentModel.Transform(student)
                     .ApplyFieldFiltering(fields);
 

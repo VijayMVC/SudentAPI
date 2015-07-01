@@ -54,6 +54,7 @@
     <Compile Include="Repositories\IRepositoryProvider.cs" />
     <Compile Include="Repositories\IRepositoryInit.cs" />
     <Compile Include="Repositories\Students\IStudentCourseRepository.cs" />
+    <Compile Include="Repositories\Students\IStudentRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
