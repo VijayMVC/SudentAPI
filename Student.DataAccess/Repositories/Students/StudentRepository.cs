@@ -19,8 +19,6 @@ namespace Student.DataAccess.Repositories.Students
                 .CreateCriteria("S.Major", "M", JoinType.LeftOuterJoin)
                 .CreateCriteria("S.StudentCourses", "SC", JoinType.LeftOuterJoin)
                 .CreateCriteria("SC.CourseInstance", "CI", JoinType.LeftOuterJoin)
-                .CreateCriteria("CI.Course", "C", JoinType.LeftOuterJoin)
-                .CreateCriteria("CI.Semester", "Sm", JoinType.LeftOuterJoin)
                 .SetResultTransformer(new DistinctRootEntityResultTransformer())
                 .List<DomainStudent>().ToList();
 
@@ -34,8 +32,6 @@ namespace Student.DataAccess.Repositories.Students
                 .CreateCriteria("S.Major", "M", JoinType.LeftOuterJoin)
                 .CreateCriteria("S.StudentCourses", "SC", JoinType.LeftOuterJoin)
                 .CreateCriteria("SC.CourseInstance", "CI", JoinType.LeftOuterJoin)
-                .CreateCriteria("CI.Course", "C", JoinType.LeftOuterJoin)
-                .CreateCriteria("CI.Semester", "Sm", JoinType.LeftOuterJoin)
                 .SetResultTransformer(new DistinctRootEntityResultTransformer())
                 .List<DomainStudent>().FirstOrDefault();
 

@@ -16,19 +16,14 @@ namespace Student.DataAccess.Maps.Courses
             Table("CourseInstance");
             Schema("dbo");
             CompositeId()
-                .KeyProperty(Reveal.Member<CourseInstance>("CPK_CourseId"), "CourseId")
-                .KeyProperty(Reveal.Member<CourseInstance>("CPK_SemesterId"), "SemesterId");
+                .KeyReference(x => x.Course, "CourseId")
+                .KeyReference(x => x.Semester, "SemesterId");
 
             Map(x => x.MaxStudentCount, "MaxStudentCount");
             Map(x => x.DateCreated);
             Map(x => x.DateModified);
             Map(x => x.UserCreated);
             Map(x => x.UserModified);
-
-            References(x => x.Course, "CourseId")
-                .Cascade.None();
-            References(x => x.Semester, "SemesterId")
-                .Cascade.None();
 
             HasManyToMany(x => x.Students)
                 .Table("StudentCourse")

@@ -10,10 +10,6 @@ namespace Student.Domain.Domain.Sudents
 {
     public class StudentCourse : AuditEntity
     {
-        private Int32 CPK_StudentId { get; set; }
-        private Int32 CPK_CourseId { get; set; }
-        private Int32 CPK_SemesterId { get; set; }
-
         public virtual Student Student { get; set; }
         public virtual CourseInstance CourseInstance { get; set; }
         public virtual Double Grade { get; set; }
@@ -24,9 +20,8 @@ namespace Student.Domain.Domain.Sudents
             if (castedObject == null)
                 return false;
 
-            if (castedObject.CPK_StudentId == this.CPK_StudentId && 
-                castedObject.CPK_CourseId == this.CPK_CourseId &&
-                castedObject.CPK_SemesterId == this.CPK_SemesterId)
+            if (castedObject.Student == this.Student &&
+                castedObject.CourseInstance == this.CourseInstance)
                 return true;
 
             return false;
@@ -34,7 +29,7 @@ namespace Student.Domain.Domain.Sudents
 
         public override int GetHashCode()
         {
-            return CPK_StudentId.GetHashCode() ^ CPK_CourseId.GetHashCode() ^ CPK_SemesterId.GetHashCode();
+            return Student.GetHashCode() ^ CourseInstance.GetHashCode();
         }
     }
 }

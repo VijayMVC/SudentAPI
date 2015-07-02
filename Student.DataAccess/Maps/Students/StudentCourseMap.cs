@@ -18,26 +18,14 @@ namespace Student.DataAccess.Maps.Students
             Table("StudentCourse");
             Schema("dbo");
             CompositeId()
-                .KeyProperty(Reveal.Member<StudentCourse>("CPK_StudentId"), "StudentId")
-                .KeyProperty(Reveal.Member<StudentCourse>("CPK_CourseId"), "CourseId")
-                .KeyProperty(Reveal.Member<StudentCourse>("CPK_SemesterId"), "SemesterId");
+                .KeyReference(x => x.Student, "StudentId")
+                .KeyReference(x => x.CourseInstance, "CourseId", "SemesterId");
 
             Map(x => x.Grade, "Grade");
             Map(x => x.DateCreated);
             Map(x => x.DateModified);
             Map(x => x.UserCreated);
             Map(x => x.UserModified);
-
-            References(x => x.Student, "StudentId")
-                .Not.Insert()
-                .Not.Update()
-                .Cascade.None();
-
-            References(x => x.CourseInstance)
-                .Columns("CourseId", "SemesterId")
-                .Not.Insert()
-                .Not.Update()
-                .Cascade.None();
         }
     }
 }
