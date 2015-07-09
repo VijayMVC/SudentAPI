@@ -22,12 +22,10 @@ namespace Student.API.Controllers
 {
     public class StudentsController : BaseApiController
     {
-        public IRepositoryProvider RepositoryProvider { get; set; }
         public IStudentRepository StudentRepository { get; set; }
 
-        public StudentsController(IRepositoryProvider repositoryProvider, IStudentRepository studentRepository)
+        public StudentsController(IStudentRepository studentRepository)
         {
-            RepositoryProvider = repositoryProvider;
             StudentRepository = studentRepository;
         }
 
@@ -40,7 +38,7 @@ namespace Student.API.Controllers
         {
             try
             {
-                var students = StudentRepository.GetWithCourses()
+                var students = StudentRepository.Get(eagerLoading: true)
                                 .Select(StudentToStudentModel.Transform)
                                 .ApplySort(sort)
                                 .ToList();
@@ -67,7 +65,7 @@ namespace Student.API.Controllers
                 if (id == default(Int32))
                     return NotFound();
 
-                var student = StudentRepository.GetWithCourses(id);
+                var student = StudentRepository.Get(id, eagerLoading: true);
                 var model = StudentToStudentModel.Transform(student)
                     .ApplyFieldFiltering(fields);
 
@@ -92,7 +90,7 @@ namespace Student.API.Controllers
                     return BadRequest();
 
                 var student = StudentModelToStudent.Transform(model);
-                RepositoryProvider.Save(student);
+                StudentRepository.Save(student);
 
                 return Created(Request.RequestUri + "/" + student.Id, student);
             }
@@ -119,11 +117,11 @@ namespace Student.API.Controllers
 
                 if (student.Id == 0)
                 {
-                    RepositoryProvider.Evict(student);
+                    StudentRepository.Evict(student);
                     return NotFound();
                 }
 
-                RepositoryProvider.Save(student);
+                StudentRepository.Save(student);
 
                 model = StudentToStudentModel.Transform(student);
                 return Ok(model);
@@ -160,7 +158,7 @@ namespace Student.API.Controllers
                 if (id == 0)
                     return BadRequest();
 
-                var student = RepositoryProvider.Get<DomainStudent>(id);
+                var student = StudentRepository.Get(id);
 
                 if (student == null)
                     return NotFound();
@@ -170,7 +168,7 @@ namespace Student.API.Controllers
 
                 student = StudentModelToStudent.Transform(model, student);
 
-                RepositoryProvider.Save(student);
+                StudentRepository.Save(student);
 
                 return Ok(model);
             }
@@ -191,12 +189,12 @@ namespace Student.API.Controllers
                 if (id == 0)
                     return BadRequest();
 
-                var student = RepositoryProvider.Get<DomainStudent>(id);
+                var student = StudentRepository.Get(id);
 
                 if (student == null)
                     return NotFound();
 
-                RepositoryProvider.Delete(student);
+                StudentRepository.Delete(student);
 
                 return StatusCode(HttpStatusCode.NoContent);
             }

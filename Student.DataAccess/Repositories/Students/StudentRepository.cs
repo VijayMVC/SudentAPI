@@ -13,29 +13,65 @@ namespace Student.DataAccess.Repositories.Students
 {
     public class StudentRepository : RepositoryProvider, IStudentRepository
     {
-        public List<DomainStudent> GetWithCourses()
+        #region Create/Update
+
+        public void Save(DomainStudent student)
         {
-            var students = Session.CreateCriteria<DomainStudent>("S")
-                .CreateCriteria("S.Major", "M", JoinType.LeftOuterJoin)
-                .CreateCriteria("S.StudentCourses", "SC", JoinType.LeftOuterJoin)
-                .CreateCriteria("SC.CourseInstance", "CI", JoinType.LeftOuterJoin)
-                .SetResultTransformer(new DistinctRootEntityResultTransformer())
+            Session.SaveOrUpdate(student);
+            Session.Flush();
+        }
+
+        public void Evict(DomainStudent student)
+        {
+            Session.Evict(student);
+        }
+
+        #endregion
+
+        #region Read
+        public List<DomainStudent> Get(Boolean eagerLoading = false)
+        {
+            var studentsCriteria = Session.CreateCriteria<DomainStudent>("S");
+
+            if (eagerLoading)
+            {
+                studentsCriteria.CreateCriteria("S.Major", "M", JoinType.LeftOuterJoin)
+                    .CreateCriteria("S.StudentCourses", "SC", JoinType.LeftOuterJoin)
+                    .CreateCriteria("SC.CourseInstance", "CI", JoinType.LeftOuterJoin);
+            }
+
+            var students = studentsCriteria.SetResultTransformer(new DistinctRootEntityResultTransformer())
                 .List<DomainStudent>().ToList();
 
             return students;
         }
 
-        public DomainStudent GetWithCourses(Int32 studentId)
+        public DomainStudent Get(Int32 studentId, Boolean eagerLoading = false)
         {
-            var student = Session.CreateCriteria<DomainStudent>("S")
-                .Add(Restrictions.Eq(Projections.Property<DomainStudent>(s => s.Id), studentId))
-                .CreateCriteria("S.Major", "M", JoinType.LeftOuterJoin)
-                .CreateCriteria("S.StudentCourses", "SC", JoinType.LeftOuterJoin)
-                .CreateCriteria("SC.CourseInstance", "CI", JoinType.LeftOuterJoin)
-                .SetResultTransformer(new DistinctRootEntityResultTransformer())
+            var studentCriteria = Session.CreateCriteria<DomainStudent>("S")
+                .Add(Restrictions.Eq(Projections.Property<DomainStudent>(s => s.Id), studentId));
+
+            if (eagerLoading)
+            {
+                studentCriteria.CreateCriteria("S.Major", "M", JoinType.LeftOuterJoin)
+                    .CreateCriteria("S.StudentCourses", "SC", JoinType.LeftOuterJoin)
+                    .CreateCriteria("SC.CourseInstance", "CI", JoinType.LeftOuterJoin);
+            }
+
+            var student = studentCriteria.SetResultTransformer(new DistinctRootEntityResultTransformer())
                 .List<DomainStudent>().FirstOrDefault();
 
             return student;
         }
+        #endregion
+
+        #region Delete
+
+        public void Delete(DomainStudent student)
+        {
+            Session.Delete(student);
+            Session.Flush();
+        }
+        #endregion
     }
 }

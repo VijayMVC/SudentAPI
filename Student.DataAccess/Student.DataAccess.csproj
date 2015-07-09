@@ -75,6 +75,7 @@
     <Compile Include="Maps\Students\StudentMap.cs" />
     <Compile Include="NHibernateContractResolver.cs" />
     <Compile Include="Repositories\Courses\CourseInstanceRepository.cs" />
+    <Compile Include="Repositories\Lookups\LookupRepository.cs" />
     <Compile Include="Repositories\NHibernateSessionProvider.cs" />
     <Compile Include="Repositories\RepositoryInit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

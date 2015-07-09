@@ -53,6 +53,7 @@
     <Compile Include="Repositories\Courses\ICourseInstanceRepository.cs" />
     <Compile Include="Repositories\IRepositoryProvider.cs" />
     <Compile Include="Repositories\IRepositoryInit.cs" />
+    <Compile Include="Repositories\Lookups\ILookupRepository.cs" />
     <Compile Include="Repositories\Students\IStudentCourseRepository.cs" />
     <Compile Include="Repositories\Students\IStudentRepository.cs" />
   </ItemGroup>

@@ -13,12 +13,10 @@ namespace Student.API.Controllers
 {
     public class StudentCoursesController : BaseApiController
     {
-        public IRepositoryProvider RepositoryProvider { get; set; }
         public IStudentCourseRepository StudentCourseRepository { get; set; }
 
-        public StudentCoursesController(IRepositoryProvider repositoryProvider, IStudentCourseRepository studentCourseRepository)
+        public StudentCoursesController(IStudentCourseRepository studentCourseRepository)
         {
-            RepositoryProvider = repositoryProvider;
             StudentCourseRepository = studentCourseRepository;
         }
 
@@ -33,7 +31,7 @@ namespace Student.API.Controllers
                 if (studentCourses == null)
                     return NotFound();
 
-                var model = StudentCourseRepository.GetByStudentId(studentId)
+                var model = studentCourses
                     .Select(StudentCourseToStudentCourseModel.Transform)
                     .ApplySort(sort)
                     .ToList();

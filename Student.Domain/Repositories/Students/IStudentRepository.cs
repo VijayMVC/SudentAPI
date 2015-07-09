@@ -9,7 +9,12 @@ namespace Student.Domain.Repositories.Students
 {
     public interface IStudentRepository : IRepositoryProvider
     {
-        List<DomainStudent> GetWithCourses();
-        DomainStudent GetWithCourses(Int32 studentId);
+        void Save(DomainStudent student);
+        void Evict(DomainStudent student);
+
+        List<DomainStudent> Get(Boolean eagerLoading = false);
+        DomainStudent Get(Int32 studentId, Boolean eagerLoading = false);
+
+        void Delete(DomainStudent student);
     }
 }

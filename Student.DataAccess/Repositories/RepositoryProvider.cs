@@ -17,7 +17,7 @@ namespace Student.DataAccess.Repositories
     {
         public string RepositoryKey { get; set; }
 
-        public ISession Session
+        protected ISession Session
         {
             get
             {
@@ -40,6 +40,8 @@ namespace Student.DataAccess.Repositories
             }
         }
 
+        #region Sunflower Repository Methods
+        /*
         public T Get<T>(object id)
         {
             return Session.Get<T>(id);
@@ -117,5 +119,7 @@ namespace Student.DataAccess.Repositories
 
             return cmd;
         }
+        */
+        #endregion
     }
 }

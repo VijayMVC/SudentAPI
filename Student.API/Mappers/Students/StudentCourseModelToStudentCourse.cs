@@ -19,7 +19,7 @@ namespace Student.API.Mappers.Students
 
         static readonly List<Transformer> Transformers = new List<Transformer>()
         {
-            (d, m, r) => m.Student = r.Get<DomainStudent>(d.StudentId),
+            (d, m, r) => m.Student = IocRegistration.IoCContainer.Resolve<IStudentRepository>().Get(d.StudentId),
             (d, m, r) => m.CourseInstance = r.Find(d.Course, d.Semester),
             (d, m, r) => m.Grade = d.Grade,
         };
