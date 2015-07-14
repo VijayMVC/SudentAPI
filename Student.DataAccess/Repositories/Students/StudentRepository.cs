@@ -15,9 +15,19 @@ namespace Student.DataAccess.Repositories.Students
     {
         #region Create/Update
 
-        public void Save(DomainStudent student)
+        public void Insert(DomainStudent student)
         {
-            Session.SaveOrUpdate(student);
+            Session.Save(student);
+            foreach (var course in student.StudentCourses)
+            {
+                Session.Save(course);
+            }
+            Session.Flush();
+        }
+
+        public void Update(DomainStudent student)
+        {
+            Session.Update(student);
             Session.Flush();
         }
 

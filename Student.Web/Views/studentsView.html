@@ -1,0 +1,17 @@
+﻿<div class="well">
+    <label>Students:</label><br />
+    <br />
+    Search: <input ng-model="query" /><br />
+    Sort By:
+    <select ng-model="sortOrder">
+        <option value="firstName">First Name</option>
+        <option value="lastName">Last Name</option>
+    </select>
+    <hr />
+
+    <ul>
+        <li ng-repeat="student in students | filter:query | orderBy:sortOrder">
+            <span>{{student.firstName}} {{student.lastName}}</span>
+        </li>
+    </ul>
+</div>

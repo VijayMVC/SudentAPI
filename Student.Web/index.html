@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="studentApp">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Student Portal</title>
+        <link rel="shortcut icon" href="assets/img/angular.ico" type="favicon/ico"/>
+
+        <link href="Content/bootstrap.css" rel="stylesheet" />
+        <link href="Content/ui-bootstrap-csp.css" rel="stylesheet" />
+
+        <script src="Scripts/angular.js"></script>
+        <script src="Scripts/angular-route.js"></script>
+        <script src="Scripts/angular-ui/ui-bootstrap.js"></script>
+        <script src="Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+
+        <script src="app/app.routes.js"></script>
+        <script src="app/app.module.js"></script>
+
+        <script src="app/controllers/LoadingCtrl.js"></script>
+
+        <script src="app/services/LoadingService.js"></script>
+        
+        <style>
+            [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            <div ng-controller="loadingCtrl">
+                <script type="text/ng-template" id="loadingModal.html">
+                    <div class="modal-body">
+                        <progressbar class="progress-striped active progress-warning" style="margin-bottom: 0px" value="dynamic" max="max"></progressbar>
+                    </div>
+                </script>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-xs-12 col-sm-12 col-md-8">
+                    <div ng-view></div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </body>
+</html>

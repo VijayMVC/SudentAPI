@@ -31,9 +31,9 @@ namespace Student.DataAccess.Maps.Students
 
             HasMany(x => x.StudentCourses)
                 .KeyColumn("StudentId")
-                .Inverse()
-                .Cascade.DeleteOrphan()
-                .Cascade.All();
+                //.Inverse()
+                //.Cascade.All()
+                .Cascade.DeleteOrphan();
         }
     }
 }

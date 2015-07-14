@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.OData;
@@ -45,6 +46,8 @@ namespace Student.API.Controllers
 
                 var results = HandlePaging(students, sort, fields, page, pageSize, MaxPageSize)
                     .ApplyFieldFiltering(fields);
+
+                //Thread.Sleep(5000);
 
                 return Ok(results);
             }
@@ -90,7 +93,7 @@ namespace Student.API.Controllers
                     return BadRequest();
 
                 var student = StudentModelToStudent.Transform(model);
-                StudentRepository.Save(student);
+                StudentRepository.Insert(student);
 
                 return Created(Request.RequestUri + "/" + student.Id, student);
             }
@@ -121,7 +124,7 @@ namespace Student.API.Controllers
                     return NotFound();
                 }
 
-                StudentRepository.Save(student);
+                StudentRepository.Update(student);
 
                 model = StudentToStudentModel.Transform(student);
                 return Ok(model);
@@ -168,7 +171,7 @@ namespace Student.API.Controllers
 
                 student = StudentModelToStudent.Transform(model, student);
 
-                StudentRepository.Save(student);
+                StudentRepository.Update(student);
 
                 return Ok(model);
             }

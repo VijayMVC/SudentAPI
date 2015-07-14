@@ -15,23 +15,27 @@ namespace Student.API.Mappers.Students
 {
     public class StudentCourseModelToStudentCourse
     {
-        public delegate void Transformer(StudentCourseModel input, StudentCourse output, ICourseInstanceRepository rep);
+        public delegate void Transformer(StudentCourseModel input, DomainStudent parent, StudentCourse output, ICourseInstanceRepository rep);
 
         static readonly List<Transformer> Transformers = new List<Transformer>()
         {
-            (d, m, r) => m.Student = IocRegistration.IoCContainer.Resolve<IStudentRepository>().Get(d.StudentId),
-            (d, m, r) => m.CourseInstance = r.Find(d.Course, d.Semester),
-            (d, m, r) => m.Grade = d.Grade,
+            (d, p, m, r) => m.Student = p,
+            (d, p, m, r) => m.CourseInstance = r.Find(d.Course, d.Semester),
+            (d, p, m, r) => m.Grade = d.Grade,
         };
 
-        public static StudentCourse Transform(StudentCourseModel input, StudentCourse output = null)
+        public static StudentCourse Transform(StudentCourseModel input, DomainStudent student, StudentCourse output = null)
         {
             var studentCourseRep = IocRegistration.IoCContainer.Resolve<IStudentCourseRepository>();
             var courseInstanceRep = IocRegistration.IoCContainer.Resolve<ICourseInstanceRepository>();
 
             if (output == null)
-                output = studentCourseRep.Find(input.StudentId, input.Course, input.Semester) ?? new StudentCourse();
-            Transformers.ForEach(i => i(input, output, courseInstanceRep));
+                output = studentCourseRep.Find(student.Id, input.Course, input.Semester);
+            
+            if(output == null)
+                output = new StudentCourse();
+
+            Transformers.ForEach(i => i(input, student, output, courseInstanceRep));
             return output;
         }
     }

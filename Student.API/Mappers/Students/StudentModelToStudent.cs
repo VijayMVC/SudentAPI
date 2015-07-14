@@ -30,15 +30,22 @@ namespace Student.API.Mappers.Students
             var studentRepository = IocRegistration.IoCContainer.Resolve<IStudentRepository>();
             var lookupRepository = IocRegistration.IoCContainer.Resolve<ILookupRepository>();
 
-            if(output == null)
-                output = studentRepository.Get(input.Id, eagerLoading: true) ?? new DomainStudent();
+            if (output == null)
+                output = studentRepository.Get(input.Id, eagerLoading: true);
+
+            if (output == null)
+                output = new DomainStudent();
+
             Transformers.ForEach(i => i(input, output, lookupRepository));
             return output;
         }
 
         private static void MapStudentCourses(DomainStudent student, StudentModel model)
         {
-            var modelCourses = model.Courses.Select(c => StudentCourseModelToStudentCourse.Transform(c)).ToList();
+            if(student.StudentCourses == null)
+                student.StudentCourses = new List<StudentCourse>();
+
+            var modelCourses = model.Courses.Select(c => StudentCourseModelToStudentCourse.Transform(c, student)).ToList();
             var studentCourses = student.StudentCourses.ToList();
 
             var coursesToAdd = modelCourses.Except(studentCourses).ToList();

@@ -9,7 +9,8 @@ namespace Student.Domain.Repositories.Students
 {
     public interface IStudentRepository : IRepositoryProvider
     {
-        void Save(DomainStudent student);
+        void Insert(DomainStudent student);
+        void Update(DomainStudent student);
         void Evict(DomainStudent student);
 
         List<DomainStudent> Get(Boolean eagerLoading = false);
