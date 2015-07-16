@@ -47,7 +47,7 @@ namespace Student.API.Controllers
                 var results = HandlePaging(students, sort, fields, page, pageSize, MaxPageSize)
                     .ApplyFieldFiltering(fields);
 
-                //Thread.Sleep(5000);
+                Thread.Sleep(1000);
 
                 return Ok(results);
             }

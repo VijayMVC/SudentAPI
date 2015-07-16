@@ -52,6 +52,8 @@
                 });
             }
 
+            console.log("Loading: " + complete + "/" + pending);
+
             $scope.dynamic = complete;
             $scope.max = pending;
         });
@@ -67,6 +69,8 @@
                     $loading.Reset();
                 }
             }
+
+            console.log("Loading: " + complete + "/" + pending);
 
             $scope.dynamic = complete;
             $scope.max = pending;

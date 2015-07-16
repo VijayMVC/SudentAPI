@@ -8,7 +8,7 @@
         var log = function (a) {
             pending++;
             console.log("Pending: " + pending);
-            $rootScope.$broadcast('pendingRequest', pending.value);
+            $rootScope.$broadcast('pendingRequest', pending);
 
             a.finally(function () {
                 complete++;

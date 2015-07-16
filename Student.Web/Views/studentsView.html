@@ -1,4 +1,43 @@
-﻿<div class="well">
+﻿<style type="text/css">
+    .gridStyle {
+        border: 1px solid rgb(212,212,212);
+        width: 400px;
+        height: 300px;
+    }
+</style>
+
+<h3>Students</h3>
+
+<div class="well">
+    <div class="row">
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <label>Filter</label>
+                <input ng-model="query" />
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <label>Sort Order</label>
+                <select ng-model="sortOrder">
+                    <option value="firstName">First Name</option>
+                    <option value="lastName">Last Name</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="well">
+    <!--<ul>
+            <li ng-repeat="student in students | filter:query | orderBy:sortOrder">
+                <span>{{student.firstName}} {{student.lastName}}</span>
+            </li>
+        </ul>-->
+    <div ui-grid="gridOptions" ui-grid-auto-resize class="myGrid" ng-style="{ 'height': height }"></div>
+</div>
+
+<!--<div class="well">
     <label>Students:</label><br />
     <br />
     Search: <input ng-model="query" /><br />
@@ -14,4 +53,4 @@
             <span>{{student.firstName}} {{student.lastName}}</span>
         </li>
     </ul>
-</div>
+</div>-->

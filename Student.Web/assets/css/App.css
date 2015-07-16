@@ -1,0 +1,9 @@
+﻿.myGrid {
+    width: 100%;
+    min-height: 50px;
+  }
+
+/*Force Grid to auto height*/
+.ui-grid-viewport {
+    height: 100% !important
+}

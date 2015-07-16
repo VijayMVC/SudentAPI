@@ -10,11 +10,15 @@
 
         <link href="Content/bootstrap.css" rel="stylesheet" />
         <link href="Content/ui-bootstrap-csp.css" rel="stylesheet" />
+        <link href="Content/ui-grid-unstable.css" rel="stylesheet" />
+        <link href="assets/css/App.css" rel="stylesheet" />
 
+        <script src="Scripts/jquery-2.1.4.js"></script>
         <script src="Scripts/angular.js"></script>
         <script src="Scripts/angular-route.js"></script>
         <script src="Scripts/angular-ui/ui-bootstrap.js"></script>
         <script src="Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+        <script src="Scripts/ui-grid-unstable.js"></script>
 
         <script src="app/app.routes.js"></script>
         <script src="app/app.module.js"></script>
@@ -47,6 +51,7 @@
             <div ng-controller="loadingCtrl">
                 <script type="text/ng-template" id="loadingModal.html">
                     <div class="modal-body">
+                        <i>{{dynamic}} / {{max}}</i>
                         <progressbar class="progress-striped active progress-warning" style="margin-bottom: 0px" value="dynamic" max="max"></progressbar>
                     </div>
                 </script>
