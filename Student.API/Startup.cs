@@ -22,16 +22,9 @@ namespace Student.API
 
             app.UseDependencyInjection();
 
-#if DEBUG
-            app.Use(async (environment, next) =>
-            {
-                Debug.WriteLine("Requesting: " + environment.Request.Path);
-
-                await next();
-
-                Debug.WriteLine("Response: " + environment.Response.StatusCode);
-            });
-#endif
+            #if DEBUG
+            app.UseDebugLogging();
+            #endif
 
             app.UseWebApi(WebApiConfig.Register());
         }

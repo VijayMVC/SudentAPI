@@ -30,8 +30,8 @@ namespace Student.API.Controllers
             StudentRepository = studentRepository;
         }
 
-        /*
-        NOTE: NHibernateContractResolver in DataAccess is filtering out Lazy Loaded properties from result set.
+        /* NOTE
+            NHibernateContractResolver in DataAccess is filtering out Lazy Loaded properties from result set.
         */
         [HttpGet]
         [Route("api/Students", Name = "StudentsList")]

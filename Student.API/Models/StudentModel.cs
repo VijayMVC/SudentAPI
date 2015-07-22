@@ -12,7 +12,5 @@ namespace Student.API.Models
         public String FirstName { get; set; }
         public String LastName { get; set; }
         public String Major { get; set; }
-
-        public List<StudentCourseModel> Courses { get; set; }
     }
 }

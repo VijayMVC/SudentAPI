@@ -135,8 +135,8 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Components\AppBuilderExtensions.cs" />
+    <Compile Include="Components\DebugLogger.cs" />
     <Compile Include="Components\DependencyInjectionComponent.cs" />
-    <Compile Include="Components\IoCFilters.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\StudentCoursesController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
@@ -151,7 +151,6 @@
     <Compile Include="Mappers\Students\StudentCourseToStudentCourseModel.cs" />
     <Compile Include="Mappers\Students\StudentModelToStudent.cs" />
     <Compile Include="Mappers\Students\StudentToStudentModel.cs" />
-    <Compile Include="Models\PagingModel.cs" />
     <Compile Include="Models\StudentCourseModel.cs" />
     <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -16,5 +16,10 @@ namespace Student.API.Components
         {
             app.Use<DependencyInjectionComponent>();
         }
+
+        public static void UseDebugLogging(this IAppBuilder app)
+        {
+            app.Use<DebugLogger>();
+        }
     }
 }

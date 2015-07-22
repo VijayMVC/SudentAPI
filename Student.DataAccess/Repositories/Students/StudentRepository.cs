@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NHibernate.Criterion;
+using NHibernate.Linq;
 using NHibernate.SqlCommand;
 using NHibernate.Transform;
 using Student.Domain.Repositories.Students;
@@ -18,10 +19,15 @@ namespace Student.DataAccess.Repositories.Students
         public void Insert(DomainStudent student)
         {
             Session.Save(student);
-            foreach (var course in student.StudentCourses)
+
+            if (student.StudentCourses != null)
             {
-                Session.Save(course);
+                foreach (var course in student.StudentCourses)
+                {
+                    Session.Save(course);
+                }
             }
+
             Session.Flush();
         }
 

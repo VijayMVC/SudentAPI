@@ -21,8 +21,7 @@ namespace Student.API.Mappers.Students
         {
             (d, m, r) => m.FirstName = d.FirstName,
             (d, m, r) => m.LastName = d.LastName,
-            (d, m, r) => m.Major = r.Find<Major>(d.Major),
-            (d, m, r) => MapStudentCourses(m, d)
+            (d, m, r) => m.Major = r.Find<Major>(d.Major)
         };
 
         public static DomainStudent Transform(StudentModel input, DomainStudent output = null)
@@ -38,24 +37,6 @@ namespace Student.API.Mappers.Students
 
             Transformers.ForEach(i => i(input, output, lookupRepository));
             return output;
-        }
-
-        private static void MapStudentCourses(DomainStudent student, StudentModel model)
-        {
-            if(student.StudentCourses == null)
-                student.StudentCourses = new List<StudentCourse>();
-
-            var modelCourses = model.Courses.Select(c => StudentCourseModelToStudentCourse.Transform(c, student)).ToList();
-            var studentCourses = student.StudentCourses.ToList();
-
-            var coursesToAdd = modelCourses.Except(studentCourses).ToList();
-            var coursesToRemove = studentCourses.Except(modelCourses).ToList();
-
-            foreach (var courseToRemove in coursesToRemove)
-                student.StudentCourses.Remove(courseToRemove);
-
-            foreach(var courseToAdd in coursesToAdd)
-                student.StudentCourses.Add(courseToAdd);
         }
     }
 }

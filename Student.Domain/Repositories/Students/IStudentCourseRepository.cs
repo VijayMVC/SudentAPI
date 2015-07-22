@@ -10,7 +10,7 @@ namespace Student.Domain.Repositories.Students
 {
     public interface IStudentCourseRepository : IRepositoryProvider
     {
-        List<StudentCourse> GetByStudentId(Int32 studentId);
+        List<StudentCourse> GetByStudentId(Int32 studentId, Boolean eagerLoading = false);
         StudentCourse Find(Int32 studentId, String courseCode, String semesterDesc);
     }
 }

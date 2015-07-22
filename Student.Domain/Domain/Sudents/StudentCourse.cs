@@ -11,6 +11,9 @@ namespace Student.Domain.Domain.Sudents
     public class StudentCourse : AuditEntity
     {
         public virtual Student Student { get; set; }
+        public virtual Course Course { get; set; }
+        public virtual Semester Semester { get; set; }
+
         public virtual CourseInstance CourseInstance { get; set; }
         public virtual Double Grade { get; set; }
 
@@ -20,8 +23,7 @@ namespace Student.Domain.Domain.Sudents
             if (castedObject == null)
                 return false;
 
-            if (castedObject.Student == this.Student &&
-                castedObject.CourseInstance == this.CourseInstance)
+            if (castedObject.Student == this.Student && castedObject.Course == this.Course && castedObject.Semester == this.Semester)
                 return true;
 
             return false;
@@ -29,7 +31,7 @@ namespace Student.Domain.Domain.Sudents
 
         public override int GetHashCode()
         {
-            return Student.GetHashCode() ^ CourseInstance.GetHashCode();
+            return Student.GetHashCode() ^ Course.GetHashCode() ^ Semester.GetHashCode();
         }
     }
 }

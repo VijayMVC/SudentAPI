@@ -19,13 +19,18 @@ namespace Student.DataAccess.Maps.Students
             Schema("dbo");
             CompositeId()
                 .KeyReference(x => x.Student, "StudentId")
-                .KeyReference(x => x.CourseInstance, "CourseId", "SemesterId");
+                .KeyReference(x => x.Course, "CourseId")
+                .KeyReference(x => x.Semester, "SemesterId");
 
             Map(x => x.Grade, "Grade");
             Map(x => x.DateCreated);
             Map(x => x.DateModified);
             Map(x => x.UserCreated);
             Map(x => x.UserModified);
+
+            References(x => x.CourseInstance)
+                .Columns("CourseId", "SemesterId");
+
         }
     }
 }

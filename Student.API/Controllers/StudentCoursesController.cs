@@ -27,7 +27,8 @@ namespace Student.API.Controllers
         {
             try
             {
-                var studentCourses = StudentCourseRepository.GetByStudentId(studentId);
+                var studentCourses = StudentCourseRepository.GetByStudentId(studentId, eagerLoading:true);
+
                 if (studentCourses == null)
                     return NotFound();
 

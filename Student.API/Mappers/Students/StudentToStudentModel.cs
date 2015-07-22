@@ -23,8 +23,7 @@ namespace Student.API.Mappers.Students
             (d, m) => m.Id = d.Id,
             (d, m) => m.FirstName = d.FirstName,
             (d, m) => m.LastName = d.LastName,
-            (d, m) => m.Major = d.Major.ShortDescription,
-            (d, m) => m.Courses = d.StudentCourses.Select(StudentCourseToStudentCourseModel.Transform).ToList()
+            (d, m) => m.Major = d.Major.ShortDescription
         };
 
         public static StudentModel Transform(DomainStudent input)

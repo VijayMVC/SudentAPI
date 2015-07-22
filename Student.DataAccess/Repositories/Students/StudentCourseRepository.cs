@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.SqlServer.Server;
 using NHibernate.Criterion;
+using NHibernate.SqlCommand;
 using NHibernate.Transform;
 using Student.Domain.Domain.Courses;
 using Student.Domain.Domain.Lookups;
@@ -15,10 +16,19 @@ namespace Student.DataAccess.Repositories.Students
 {
     public class StudentCourseRepository : RepositoryProvider, IStudentCourseRepository
     {
-        public List<StudentCourse> GetByStudentId(Int32 studentId)
+        public List<StudentCourse> GetByStudentId(Int32 studentId, Boolean eagerLoading = false)
         {
-            var studentCourses = Session.CreateCriteria<StudentCourse>()
-                .Add(Restrictions.Eq(Projections.Property<StudentCourse>(sc => sc.Student.Id), studentId))
+            var criteria = Session.CreateCriteria<StudentCourse>("SC")
+                .Add(Restrictions.Eq(Projections.Property<StudentCourse>(sc => sc.Student.Id), studentId));
+
+            if (eagerLoading)
+            {
+                criteria.CreateCriteria("SC.CourseInstance", "CI", JoinType.LeftOuterJoin)
+                    .CreateCriteria("CI.Course", "C", JoinType.LeftOuterJoin)
+                    .CreateCriteria("CI.Semester", "S", JoinType.LeftOuterJoin);
+            }
+
+            var studentCourses = criteria.SetResultTransformer(new DistinctRootEntityResultTransformer())
                 .List<StudentCourse>().ToList();
 
             return studentCourses;
