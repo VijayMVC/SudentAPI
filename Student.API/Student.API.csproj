@@ -21,6 +21,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -137,6 +138,7 @@
     <Compile Include="Components\AppBuilderExtensions.cs" />
     <Compile Include="Components\DebugLogger.cs" />
     <Compile Include="Components\DependencyInjectionComponent.cs" />
+    <Compile Include="Components\IoCFilters.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\StudentCoursesController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
