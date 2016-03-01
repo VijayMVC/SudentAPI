@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace RLT.CRM.Api.Components
+namespace Student.API.Components
 {
     using System.Diagnostics;
     using AppFunc = Func<IDictionary<String, Object>, Task>;
